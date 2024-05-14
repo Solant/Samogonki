@@ -3169,7 +3169,7 @@ void mchReInitGraph(int mode)
 	xgrScreenSizeX = dwScrX;
 	xgrScreenSizeY = dwScrY;
 
-	mchA_d3dResX = (float)dwScrX / 640.0f;
+	mchA_d3dResX = (float)dwScrX / getAspectRatioScaleBase(dwScrX, dwScrY);
 	mchA_d3dResY = (float)dwScrY / 480.0f;
 
 	XGR_MouseObj.SetClipAuto();

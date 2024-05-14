@@ -84,6 +84,15 @@ int mchA_d3dSpriteParent = 0;
 
 float mchA_d3dResX = 1.0f;
 float mchA_d3dResY = 1.0f;
+float getAspectRatioScaleBase(int width, int height) {
+	if (((float)width / (float)height) > 1.5f) {
+		// 16:9 aspect ratio base
+		return 853.0f;
+	}
+
+	// 4:3 aspect ratio base
+	return 640.0f;
+}
 
 int mchA_d3dEssenceID = -1;
 
@@ -111,7 +120,7 @@ void mchA_d3dInit(void)
 	}
 #endif
 
-	mchA_d3dResX = (float)XGR_MAXX / 640.0f;
+	mchA_d3dResX = (float)XGR_MAXX / getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY);
 	mchA_d3dResY = (float)XGR_MAXY / 480.0f;
 
 	d3dGetTextureFormatData(mchA_d3dTexMode,&mchA_d3dTexFmt);
