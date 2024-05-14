@@ -745,10 +745,10 @@ void mchIntroMovieText::draw(void)
 	sx = acsTextStrLenMax(2,(unsigned char*)buf,0);
 	sy = acsTextHeight(2,(unsigned char*)buf,-5);
 
-	x = (640 - sx) / 2;
+	x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sx) / 2;
 	y = 480 - sy - 10;
 
-	mchA_DrawTextWindow(0,y - 5,640,sy + 16,round(float(w_alpha) * float(alpha) / 255.0f),0,0);
+	mchA_DrawTextWindow(0,y - 5,(int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY),sy + 16,round(float(w_alpha) * float(alpha) / 255.0f),0,0);
 //	mchA_d3dOutString(x,y,mchA_FontScaleX[2],mchA_FontScaleY[2],buf,mchA_ColorF[7],alpha,2,0,1.0f,1,-6);
 
 	idx = 0;
@@ -758,7 +758,7 @@ void mchIntroMovieText::draw(void)
 		if(buf[i] == '\n'){
 			str[idx] = 0;
 			sx = acsTextStrLenMax(2,(unsigned char*)str,0);
-			x = (640 - sx) / 2;
+			x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sx) / 2;
 			mchA_d3dOutString(x,y,mchA_FontScaleX[2],mchA_FontScaleY[2],str,mchA_ColorF[7],alpha,2,0,1.0f,1);
 			y += acsFntTable[2] -> SizeY - 5;
 			idx = 0;
@@ -770,7 +770,7 @@ void mchIntroMovieText::draw(void)
 	}
 	str[idx] = 0;
 	sx = acsTextStrLenMax(2,(unsigned char*)str,0);
-	x = (640 - sx) / 2;
+	x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sx) / 2;
 	mchA_d3dOutString(x,y,mchA_FontScaleX[2],mchA_FontScaleY[2],str,mchA_ColorF[7],alpha,2,0,1.0f,1);
 }
 
