@@ -284,7 +284,7 @@ void mchA_d3dOutSpriteZ(int x,int y,int z,float sx,float sy,int idx,int col,int 
 void mchA_d3dDrawSprite(int x,int y,float sx,float sy,int handle,int col,int alpha,float rotate,int center_flag)
 {
 	int ret,cnt = 0,mode = (center_flag) ? MD3DORG_CENTER : MD3DORG_TOPLEFT;
-	
+
 	do {
 /*
 		d3dEndScene();
@@ -293,7 +293,7 @@ void mchA_d3dDrawSprite(int x,int y,float sx,float sy,int handle,int col,int alp
 */
 		ret = MD3D_OK;
 
-		if(++cnt > 100) 
+		if(++cnt > 100)
 			break;
 
 		if(ret == MD3D_OK){
@@ -309,7 +309,7 @@ void mchA_d3dDrawSpriteZ(int x,int y,int z,float sx,float sy,int handle,int col,
 {
 	float zHard,wHard,z_;
 	int ret,cnt = 0,mode = (center_flag) ? MD3DORG_CENTER : MD3DORG_TOPLEFT;
-	
+
 	do {
 		z_ = (float)z;
 		sRectangle4f Clipping;
@@ -320,7 +320,7 @@ void mchA_d3dDrawSpriteZ(int x,int y,int z,float sx,float sy,int handle,int col,
 
 		ret = MD3D_OK;
 
-		if(++cnt > 100) 
+		if(++cnt > 100)
 			break;
 
 		if(ret == MD3D_OK){
@@ -833,7 +833,7 @@ void mchA_d3dConvertSprite(int sx,int sy,void* src,void* dest,int src_colors)
 		g_bits = (XGR_SHIFT_R == XGR_SHIFT_R0) ? 6  : 5;
 		g_shift = XGR_SHIFT_G;
 		g_mask = XGR_MASK_G;
-	
+
 		b_bits = 5;
 		b_shift = XGR_SHIFT_B;
 		b_mask = XGR_MASK_B;
@@ -1001,6 +1001,24 @@ int mchA_d3dCheckMode(int mode,int color_depth)
 			case MCH_1600x1200:
 				sx = 1600;
 				sy = 1200;
+				break;
+			case MCH_1280x720:
+				sx=1280,sy=720;
+				break;
+			case MCH_1280x800:
+				sx=1280,sy=800;
+				break;
+			case MCH_1920x1080:
+				sx=1920,sy=1080;
+				break;
+			case MCH_1920x1200:
+				sx=1920,sy=1200;
+				break;
+			case MCH_2560x1440:
+				sx=2560,sy=1440;
+				break;
+			case MCH_2560x1600:
+				sx=2560,sy=1440;
 				break;
 		}
 		for(i = 0; i < mchA_d3dNumModes; i ++){

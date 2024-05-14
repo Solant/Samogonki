@@ -428,11 +428,11 @@ int xtInitApplication(void)
 	CONTROL_FP();
 	typedef void (*PV)();
 	SetAssertRestoreGraphicsFunction((PV)&d3dFlipToGdiSurface);
-#ifndef _FINAL_VERSION_	
+#ifndef _FINAL_VERSION_
 	if(check_command_line("dont_sleep"))
 		d3dSetFocusLossBehavior(0);
 #endif
-							
+
 	mchComline();
 /*
 	xt_get_cpuid();
@@ -454,7 +454,7 @@ int xtInitApplication(void)
 //	else XCon < "is absent";
 //	XCon < "...\n";
 //	XCon < "Process priority: " <= win32_GetProcessPriority() < "\n";
-	
+
 	mchPrepareSound();
 	mchInitControls();
 
@@ -545,6 +545,24 @@ int xtInitApplication(void)
 		case MCH_1600x1200:
 			dwScrX=1600,dwScrY=1200;
 			break;
+		case MCH_1280x720:
+			dwScrX=1280,dwScrY=720;
+			break;
+		case MCH_1280x800:
+			dwScrX=1280,dwScrY=800;
+			break;
+		case MCH_1920x1080:
+			dwScrX=1920,dwScrY=1080;
+			break;
+		case MCH_1920x1200:
+			dwScrX=1920,dwScrY=1200;
+			break;
+		case MCH_2560x1440:
+			dwScrX=2560,dwScrY=1440;
+			break;
+		case MCH_2560x1600:
+			dwScrX=2560,dwScrY=1440;
+			break;
 	}
 
 	if(xgrInitFlags&DIRECT3D_HICOLOR){
@@ -566,7 +584,7 @@ int xtInitApplication(void)
 		sRectangle4f r1(dwScrX*0.001f,dwScrX*0.001f,dwScrX*0.999f,dwScrY*0.999f);
 		gb_IVisGeneric->SetGraphClipping(gb_URenderDevice,&r1);
 	}
-	
+
 
 	allocation_tracking("xgrInit");
 
@@ -597,7 +615,7 @@ int xtInitApplication(void)
 			&v3, // ближайший и дальний z-плоскости отсечения
 			&v4); // zNear и zFar для мапирования в zBuffer
 	}
-	
+
 	gb_IVisGeneric->AttachCameraViewPort(iCamera,gb_URenderDevice);
 
 	gameWnd = new mchGameWindow;
@@ -612,7 +630,7 @@ int xtInitApplication(void)
 
 	mchDetectJoystick = XJoystickInit();
 
-	if(!mchDetectJoystick) 
+	if(!mchDetectJoystick)
 		mchEnableJoystick = 0;
 	else
 		XJoystickSetHandler(&acsJoyHandler);
@@ -621,7 +639,7 @@ int xtInitApplication(void)
 
 	mchInitSound();
 	allocation_tracking("mchInitSound");
-				     
+
 	CONTROL_FP();
 
 	if(mchOpenNewChar)
@@ -663,7 +681,7 @@ int xtInitApplication(void)
 }
 
 void xtDoneApplication(void)
-{	
+{
 	mchFreeResources();
 	fxlabFinit();
 	if(gb_IVisGeneric)
@@ -733,7 +751,7 @@ void GameQuantRTO::Init(int id)
 		non_stop_global_time.setTime(1);
 		xm_random_generator.set(1);
 		ArcaneStatisticsService::setCurrentArcane(ArcaneStatisticsInfo());
-				
+
 		mchWorldsInit();
 
 		iwInit();
@@ -850,7 +868,7 @@ void GameQuantRTO::Init(int id)
 
 		mchRealClockStart = clocki();
 	}
-	else 
+	else
 		if(!mchMusicMute) mchSetMusicMode(MCH_CD_SHOW);
 
 	mchInitMouse();
@@ -858,7 +876,7 @@ void GameQuantRTO::Init(int id)
 	if(mchNewGameMode == 5 && mchTimeMode == MCH_TIME_RUNNING) mchResumeSound();
 	mchA_TimerStart = non_stop_global_time() - mchA_TimerCur;
 	mchTrackDemoStartTimer = mchTrackDemoCurTimer = mch_clock();
-	
+
 	allocation_tracking("GameQuant Init");
 
 #ifdef _RT_PROFILER
@@ -868,7 +886,7 @@ void GameQuantRTO::Init(int id)
 //	profiler_start_auto_shoot(header);
 	allocation_tracking_message(header);
 #endif
-	
+
 #ifndef _FINAL_VERSION_
 	const char* dir_str = check_command_line("hide_evolve:");
 	if(dir_str){
@@ -937,7 +955,7 @@ int GameQuantRTO::Quant(void)
 //	mch_arcScrD -> TimerQuant();
 
 	stop_timer(mchGlobalQuant, STAT_TOTAL);
-	
+
 	start_timer(Sound_Quant, STAT_TOTAL);
 	mchSoundQuant();
 	stop_timer(Sound_Quant, STAT_TOTAL);
@@ -947,7 +965,7 @@ int GameQuantRTO::Quant(void)
 	stop_timer(IVG_Fill, STAT_TOTAL);
 
 	/////////////////////////////////////
-	//  Logical calculations	
+	//  Logical calculations
 	start_timer(physics, STAT_TOTAL);
 
 	resource_dispatcher.quant();
@@ -984,7 +1002,7 @@ int GameQuantRTO::Quant(void)
 	gb_IGraph3d->BeginScene();
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	gb_IVisGeneric->Draw(DrawMask);	
+	gb_IVisGeneric->Draw(DrawMask);
 	stop_timer(IVG_Draw, STAT_TOTAL);
 
 	start_timer(fxlabClientShow, STAT_TOTAL);
@@ -992,20 +1010,20 @@ int GameQuantRTO::Quant(void)
 	stop_timer(fxlabClientShow, STAT_TOTAL);
 
 	start_timer(mch_raceD, STAT_TOTAL);
-	mch_raceD -> showStats(); 
+	mch_raceD -> showStats();
 
-	mch_raceD -> redraw();    
+	mch_raceD -> redraw();
 	stop_timer(mch_raceD, STAT_TOTAL);
 
 	start_timer(mch_arcScrD, STAT_TOTAL);
-	mch_arcScrD -> Quant(); 
+	mch_arcScrD -> Quant();
 
-	mch_arcScrD -> Redraw(); 
+	mch_arcScrD -> Redraw();
 
 	if(mch_trkRec)
 		mch_trkRec -> Redraw();
 
-	if(mchFPS_Log) mchFPS_Quant(); 
+	if(mchFPS_Log) mchFPS_Quant();
 	stop_timer(mch_arcScrD, STAT_TOTAL);
 
 	start_timer(Flush, STAT_TOTAL);
@@ -1175,7 +1193,7 @@ int MainMenuRTO::Quant(void)
 
 void MainMenuRTO::Finit(void)
 {
-	if(mch_iScreen){ 
+	if(mch_iScreen){
 		if(mchSkipMainMenu){
 			mchDemoMode = mchSkipMainMenu = 0;
 			acsActiveFlag = 0;
@@ -1221,7 +1239,7 @@ void mchComline(void)
 					if(!strnicmp(p[i] + 1,"maxfps",strlen("maxfps"))){
 						if(strlen(p[i] + strlen("maxfps") + 1))
 							mchMaxFPS = round(1000.0f / (float)atoi(p[i] + strlen("maxfps") + 1));
-						else 
+						else
 							mchMaxFPS = 0;
 
 						XCon < "Max FPS = " <= mchMaxFPS < "\n";
@@ -1306,7 +1324,7 @@ void mchComline(void)
 						mchGameMode = MCH_ENTIRE_CONTROL_HS;
 						mch_iScreen = 0;
 					}
-					else 
+					else
 						inHighPriority = 1 - inHighPriority;
 					break;
 				case 'S':
@@ -1465,7 +1483,7 @@ void mchKeyTrap(void)
 			mch_arcScrD -> FinitTrackDemoScreen();
 		return;
 	}
-	
+
 	if(mch_demoD.is_enabled()){
 		sz = KeyBuf -> size;
 		while(KeyBuf -> size){
@@ -1548,7 +1566,7 @@ void mchKeyTrap(void)
 		mchA_CHQuant(k);
 
 		id = mchGetKeyID_First(k);
-		
+
 		while(id != -1){
 			switch(id){
 				case MCH_KEY_EXIT:
@@ -1599,7 +1617,7 @@ void mchKeyTrap(void)
 				if(!mchPBEM_Pause){
 					if(!mch_AMenu -> Active())
 						mchSetControlPoint();
-					else 
+					else
 						mch_arcScrD -> MouseHandler(0);
 				}
 				break;
@@ -1609,7 +1627,7 @@ void mchKeyTrap(void)
 					if(mchTimeMode == MCH_TIME_STOPPED && mch_raceD -> activeRacer -> mouseSeed){
 						mch_raceD -> activeRacer -> RemoveSelectedSeed();
 					}
-					else 
+					else
 						mch_arcScrD -> MouseHandler(1);
 				}
 */
@@ -1648,17 +1666,17 @@ void mchKeyTrap(void)
 						mchPauseSound();
 					}
 */
-				break;	
+				break;
 /*
-			case 'A': // только отраженные объекты 
+			case 'A': // только отраженные объекты
 				if(DrawMask&0x0000000F)
 					DrawMask&=~0x0000000F;
 				else
-					DrawMask|=0x0000000F; 
+					DrawMask|=0x0000000F;
 				break;
 			case 'S': // глобальные не прозрачные объекты мира
 				if(DrawMask&0x000000F0)
-					DrawMask&=~0x000000F0; 
+					DrawMask&=~0x000000F0;
 				else
 					DrawMask|=0x000000F0;
 				break;
@@ -1738,7 +1756,7 @@ void mchWorldsInit(void)
 	vMap -> load3Buf(0,0,0);//mchCurrentTrack
 	//if(RenderMode!=DIRECT3D_HICOLOR)
 	//	WorldRender();
-	//RenderShadovM3DAll();	
+	//RenderShadovM3DAll();
 
 	mchLoadTimerFunc(4000);
 
@@ -2129,7 +2147,7 @@ void mchFreeResources(int mode)
 	mchCamera3D = 0;
 	mchCameraAX = mchCameraAY = mchCameraAZ = 0.0f;
 
-	if(!mode && mch_iScreen) 
+	if(!mode && mch_iScreen)
 		acsClearStack();
 
 	mchStopSound();
@@ -2142,7 +2160,7 @@ void mchFreeResources(int mode)
 	Xreal_finit();
 
 	mchTimeMode = MCH_TIME_RUNNING;
-	
+
 	gb_IVisGeneric->ReleaseObject(0xFFFFFFFF,0xFFFFFFFF);
 	gb_IVisGeneric->ReleaseOmni(0xFFFFFFFF);
 }
@@ -2198,7 +2216,7 @@ void mchSetTimeMode(int m)
 
 			mchFreezeTime = 0;
 
-			if(!mchPBEM_Pause){ 
+			if(!mchPBEM_Pause){
 				mch_raceD -> ResetSeeds();
 
 				if(mchGameMode == MCH_SPLIT_CONTROL_HS)
@@ -2400,7 +2418,7 @@ void mchGlobalQuant(void)
 							break;
 					}
 				}
-				else 
+				else
 					mchTurn ++;
 
 				if(mchHS_LoadFlag){
@@ -2709,7 +2727,7 @@ int ShowImageRTO::Quant(void)
 	if(mch_ShowImages || Flags[0] & IMG_RTO_NO_DISABLE){
 		if(Flags[curFile] & (IMG_RTO_INTRO_IMAGE | IMG_RTO_SCROLL_TEXT) || (count + WaitTimer) > clocki())
 			ret_flag = 0;
-		else 
+		else
 			SetGammaSeq(-1);
 
 		if(d3dIsActive()){
@@ -2748,7 +2766,7 @@ int ShowImageRTO::Quant(void)
 		if(gammaDir){
 			ret_flag = 0;
 			v = ((clocki() - gammaTimerBeg) >> 1);
-			if(v >= 255){ 
+			if(v >= 255){
 				if(gammaDir < 0) ret_flag = 1;
 				gammaDir = 0;
 			}
@@ -2817,7 +2835,7 @@ void ShowImageRTO::Finit(void)
 			if(NextID != XT_TERMINATE_ID)
 				mchReInitGraph(xgrGameMode);
 			else {
-				if(!mchMusicMute){ 
+				if(!mchMusicMute){
 					sndMusicStop();
 					mchMusicMute = 1;
 				}
@@ -2909,7 +2927,7 @@ void mchRestore(void)
 	mchFinitSound();
 	if(gb_IVisGeneric)
 	{
-		if(gb_URenderDevice) 
+		if(gb_URenderDevice)
 			gb_IVisGeneric->ReleaseGraph(gb_URenderDevice); // закрытие окна вывода
 		gb_UScene=0; gb_URenderDevice=0; gb_IGraph3d=0; gb_IVisGeneric=0;
 	}
@@ -2940,7 +2958,7 @@ void XrealPreQuant()
 		#endif
 		Mdisp -> pre_quant();
 		}
-	
+
 #ifndef _FINAL_VERSION_
 	const char* dir_str = check_command_line("shown_evolve:");
 	if(dir_str && atoi(dir_str) < global_time()){
@@ -3022,13 +3040,13 @@ void mchDrawQuant(void)
 
 	fxlabClientShow();
 
-	mch_raceD -> showStats(); 
+	mch_raceD -> showStats();
 
-	mch_raceD -> redraw();    
-	mch_arcScrD -> Redraw(); 
+	mch_raceD -> redraw();
+	mch_arcScrD -> Redraw();
 	Xreal_draw_handler();
 
-	if(mchFPS_Log) mchFPS_Quant(); 
+	if(mchFPS_Log) mchFPS_Quant();
 
 	mchA_DarkenRect(0,0,XGR_MAXX,XGR_MAXY,150);
 /*
@@ -3125,6 +3143,24 @@ void mchReInitGraph(int mode)
 		case MCH_1600x1200:
 			dwScrX=1600,dwScrY=1200;
 			break;
+		case MCH_1280x720:
+			dwScrX=1280,dwScrY=720;
+			break;
+		case MCH_1280x800:
+			dwScrX=1280,dwScrY=800;
+			break;
+		case MCH_1920x1080:
+			dwScrX=1920,dwScrY=1080;
+			break;
+		case MCH_1920x1200:
+			dwScrX=1920,dwScrY=1200;
+			break;
+		case MCH_2560x1440:
+			dwScrX=2560,dwScrY=1440;
+			break;
+		case MCH_2560x1600:
+			dwScrX=2560,dwScrY=1440;
+			break;
 	}
 	xgrInitMode = mode;
 
@@ -3202,7 +3238,7 @@ void mchPBEM_Init(void)
 		mchSetTimeMode(MCH_TIME_RUNNING);
 	mch_raceD -> firstRacer(mchPBEM_CurPlayer);
 
-	if(turn <= -1){ 
+	if(turn <= -1){
 		if(mchPBEM_GameMode == MCH_PBEM_EDIT_TURN)
 			mchPBEM_HiddenTime = -1;
 		return;
@@ -3250,7 +3286,7 @@ void mchPBEM_LoadingQuant(void)
 
 			resource_dispatcher.evolve(dt0);
 			mchLoadTimerFunc(mchTurn);
-			
+
 			mch_sndD -> Disable(0);
 		}
 		else
@@ -3295,7 +3331,7 @@ void mchPBEM_LoadingQuant(void)
 								mchPBEM_SetFlag(PBEM_LATE_TURN);
 								mchPBEM_DropFlag(PBEM_NEED_REFRESH);
 							}
-							else 
+							else
 								mchPBEM_DropFlag(PBEM_LATE_TURN);
 						}
 						else {
@@ -3487,7 +3523,7 @@ int LoadingRTO::Quant(void)
 	int v,ret = 0;
 
 	v = ((clocki() - startTimer) >> 1);
-	if(v >= 255 && !mchPBEM_DataFlag){ 
+	if(v >= 255 && !mchPBEM_DataFlag){
 		ret = NextID;
 	}
 
@@ -3540,9 +3576,9 @@ void LoadingRTO::Finit(void)
 }
 
 void ShowImageRTO::SetNumFiles(int num)
-{ 
+{
 	numFiles = num;
-	curFile = 0; 
+	curFile = 0;
 }
 
 void mchInitLogs(void)
@@ -3646,7 +3682,7 @@ int IntroMovieRTO::Quant(void)
 	}
 	else
 		mch_introMovieD -> set_time();
-	
+
 	while(KeyBuf -> size){
 		k = KeyBuf -> get();
 		if(k == VK_ESCAPE){
@@ -3660,7 +3696,7 @@ int IntroMovieRTO::Quant(void)
 			break;
 		}
 	}
-	
+
 	if(ret)
 		return NextID;
 
