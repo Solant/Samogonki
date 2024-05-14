@@ -545,6 +545,24 @@ int xtInitApplication(void)
 		case MCH_1600x1200:
 			dwScrX=1600,dwScrY=1200;
 			break;
+		case MCH_1280x720:
+			dwScrX=1280,dwScrY=720;
+			break;
+		case MCH_1280x800:
+			dwScrX=1280,dwScrY=800;
+			break;
+		case MCH_1920x1080:
+			dwScrX=1920,dwScrY=1080;
+			break;
+		case MCH_1920x1200:
+			dwScrX=1920,dwScrY=1200;
+			break;
+		case MCH_2560x1440:
+			dwScrX=2560,dwScrY=1440;
+			break;
+		case MCH_2560x1600:
+			dwScrX=2560,dwScrY=1440;
+			break;
 	}
 
 	if(xgrInitFlags&DIRECT3D_HICOLOR){
@@ -3124,6 +3142,24 @@ void mchReInitGraph(int mode)
 			break;
 		case MCH_1600x1200:
 			dwScrX=1600,dwScrY=1200;
+			break;
+		case MCH_1280x720:
+			dwScrX=1280,dwScrY=720;
+			break;
+		case MCH_1280x800:
+			dwScrX=1280,dwScrY=800;
+			break;
+		case MCH_1920x1080:
+			dwScrX=1920,dwScrY=1080;
+			break;
+		case MCH_1920x1200:
+			dwScrX=1920,dwScrY=1200;
+			break;
+		case MCH_2560x1440:
+			dwScrX=2560,dwScrY=1440;
+			break;
+		case MCH_2560x1600:
+			dwScrX=2560,dwScrY=1440;
 			break;
 	}
 	xgrInitMode = mode;

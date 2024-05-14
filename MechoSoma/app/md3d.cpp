@@ -17,7 +17,7 @@ bool g_bActive = false;
 extern MD3DERROR __d3dInitSpriteManager();
 
 MD3DERROR d3dEnumVideoMode(int *pNumVideoMode, MD3DMODE **ppArray) {
-  *pNumVideoMode = 6;
+  *pNumVideoMode = 12;
   auto modes = new MD3DMODE[*pNumVideoMode];
 
   modes[0].dx = 640;
@@ -43,6 +43,30 @@ MD3DERROR d3dEnumVideoMode(int *pNumVideoMode, MD3DMODE **ppArray) {
   modes[5].dx = 1600;
   modes[5].dy = 1200;
   modes[5].bitPerPixel = 32;
+
+  modes[6].dx = 1280;
+  modes[6].dy = 720;
+  modes[6].bitPerPixel = 32;
+
+  modes[7].dx = 1280;
+  modes[7].dy = 800;
+  modes[7].bitPerPixel = 32;
+
+  modes[8].dx = 1920;
+  modes[8].dy = 1020;
+  modes[8].bitPerPixel = 32;
+
+  modes[9].dx = 1920;
+  modes[9].dy = 1200;
+  modes[9].bitPerPixel = 32;
+
+  modes[10].dx = 2560;
+  modes[10].dy = 1440;
+  modes[10].bitPerPixel = 32;
+
+  modes[11].dx = 2560;
+  modes[11].dy = 1600;
+  modes[11].bitPerPixel = 32;
 
   *ppArray = modes;
   return MD3D_OK;
