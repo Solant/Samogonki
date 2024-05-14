@@ -1989,7 +1989,7 @@ void mchGameWindow::init(int mode)
 		flags = mode;
 
 	if(flags & MCH_WND_640x480){
-		sx = 640;
+		sx = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY);
 		sy = 480;
 	}
 	else {
