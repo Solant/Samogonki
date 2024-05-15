@@ -652,6 +652,11 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 		if (strcmp(name, "map") == 0) {
 			R.x += WIDESCREEN_OFFSET;
 		}
+
+		// patch avatars position
+		if (strcmp(name, "figure") == 0) {
+			R.x += WIDESCREEN_OFFSET;
+		}
 	}
 
 	XBuf.init();
@@ -1942,6 +1947,18 @@ void mchReInitArcaneScreen(void)
 
 	p = mch_arcScrD->objList->search(AE_SMALL_RECT2);
 	p->InitCoords("small_rect2");
+
+	mchArcaneScreenElement *curr = mch_arcScrD->objList->first();
+	mchArcaneScreenElement *last = mch_arcScrD->objList->last();
+	int figureIndex = 0;
+	do {
+		if (curr->type == AE_FIGURE_FACE) {
+			curr->InitCoords("figure");
+			curr->R.y += curr->SizeY * figureIndex;
+			figureIndex++;
+		}
+		curr = curr->next;
+	} while (curr != last);
 }
 
 void mchInitArcaneScreen(void)
