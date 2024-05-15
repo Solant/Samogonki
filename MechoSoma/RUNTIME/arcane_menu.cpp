@@ -618,6 +618,7 @@ mchArcaneScreenElement::~mchArcaneScreenElement(void)
 	free();
 }
 
+const int WIDESCREEN_OFFSET = 213;
 void mchArcaneScreenElement::InitCoords(const char* name)
 {
 	int align;
@@ -629,6 +630,29 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 	XBuf < name < "_x";
 	p = getIniKey("RESOURCE/ISCREEN/iscreen.ini","world_interface",XBuf.address());
 	if(strlen(p)) R.x = atoi(p);
+
+	// widescreen patches
+	if (getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) > 640.0f) {
+		// patch arrow horizontal placement
+		if (strcmp(name, "arrow") == 0) {
+			R.x += WIDESCREEN_OFFSET / 2;
+		}
+
+		// patch start counter
+		if (strcmp(name, "speed_counter") == 0) {
+			R.x += WIDESCREEN_OFFSET;
+		}
+
+		// patch name (wNtN) text position
+		if (strcmp(name, "name_str") == 0) {
+			R.x += WIDESCREEN_OFFSET;
+		}
+
+		// patch map position
+		if (strcmp(name, "map") == 0) {
+			R.x += WIDESCREEN_OFFSET;
+		}
+	}
 
 	XBuf.init();
 	XBuf < name < "_y";
@@ -645,6 +669,11 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 	p = getIniKey("RESOURCE/ISCREEN/iscreen.ini","world_interface",XBuf.address());
 	if(strlen(p)) SizeY = atoi(p);
 
+	// element appearance direction
+	// 0 - from left
+	// 1 - from top
+	// 2 - from right
+	// 3 - from bottom
 	XBuf.init();
 	XBuf < name < "_show_dir";
 	p = getIniKey("RESOURCE/ISCREEN/iscreen.ini","world_interface",XBuf.address());
@@ -689,6 +718,7 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 	InitR();
 }
 
+// initial position for animated elements
 void mchArcaneScreenElement::InitR(void)
 {
 	switch(showDir){
@@ -702,7 +732,8 @@ void mchArcaneScreenElement::InitR(void)
 			break;
 		case 2: // from right
 			R0 = R1 = R;
-			R0.x = 640 + 20;
+			// widescreen fix, set initial value off screen horizontally
+			R0.x = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) + 20;
 			break;
 		case 3: // from down
 			R0 = R1 = R;

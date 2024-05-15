@@ -2033,7 +2033,7 @@ void iWorldDispatcher::draw_TeleportScreen(void)
 		case MCH_TRACK_DISABLED:
 			if(!mchSplitScreenGame || mchSplitScreenMode){
 				sz = acsStrLen(1,(unsigned char*)iGetText(iTXT_COME_LATER),2);
-				mchA_d3dOutString((640 - sz)/2,y0 + 10 + acsY0,mchA_FontScaleX[1],mchA_FontScaleY[1],iGetText(iTXT_COME_LATER),mchA_ColorF[2],230,1,2);
+				mchA_d3dOutString(((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sz)/2,y0 + 10 + acsY0,mchA_FontScaleX[1],mchA_FontScaleY[1],iGetText(iTXT_COME_LATER),mchA_ColorF[2],230,1,2);
 			}
 			else
 				mchA_d3dOutString(viewport -> PosX + 100,y0 + 17 + acsY0,mchA_FontScaleX[2],mchA_FontScaleY[2],iGetText(iTXT_COME_LATER),mchA_ColorF[2],230,2,0);
@@ -2519,7 +2519,7 @@ void iWorldDispatcher::ScaleScreen(aciScreen* scr)
 		if(p -> type == ACS_INPUT_FIELD_OBJ && p -> align_x == 1){
 			fp = (aciScreenInputField*)p; 
 			fp -> SizeX = acsStrLen(fp -> font,(unsigned char*)fp -> string,fp -> Space);
-			fp -> PosX = viewport -> PosX + viewport -> SizeX - fp -> SizeX - (640 - fp -> SizeX0 - fp -> PosX0);
+			fp -> PosX = viewport -> PosX + viewport -> SizeX - fp -> SizeX - ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - fp -> SizeX0 - fp -> PosX0);
 		}
 		p = (aciScreenObject*)p -> next;
 	}
