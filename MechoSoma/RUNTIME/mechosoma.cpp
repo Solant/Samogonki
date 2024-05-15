@@ -3175,6 +3175,7 @@ void mchReInitGraph(int mode)
 	XGR_MouseObj.SetClipAuto();
 
 	mchA_d3dSetGamma(((float)xgrGammaValue)/100.0f);
+	mchReInitArcaneScreen();
 }
 
 void mchInitApplication(void)

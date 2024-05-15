@@ -664,6 +664,19 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 	p = getIniKey("RESOURCE/ISCREEN/iscreen.ini","world_interface",XBuf.address());
 	if(strlen(p)) SizeX = atoi(p);
 
+	// widescreen patches
+	if (getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) > 640.0f) {
+		if (
+			strcmp(name, "small_rect1") == 0
+			|| strcmp(name, "small_rect2") == 0
+			|| strcmp(name, "big_rect1") == 0
+			|| strcmp(name, "big_rect2") == 0
+		) {
+			printf("%i", XGR_MAXX);
+			SizeX += WIDESCREEN_OFFSET;
+		}
+	}
+
 	XBuf.init();
 	XBuf < name < "_sy";
 	p = getIniKey("RESOURCE/ISCREEN/iscreen.ini","world_interface",XBuf.address());
@@ -1919,6 +1932,16 @@ void mchA_ShowEssenceEnergy(int x,int y,float phase,int alpha,int id)
 	if(RenderMode == DIRECT3D_HICOLOR){
 		mchA_SprD -> DrawEssence(x,y,id,phase,0.0f,2,alpha);
 	}
+}
+
+// redraw on screen elements after resolution change
+void mchReInitArcaneScreen(void)
+{
+	mchArcaneScreenElement *p = mch_arcScrD->objList->search(AE_SMALL_RECT1);
+	p->InitCoords("small_rect1");
+
+	p = mch_arcScrD->objList->search(AE_SMALL_RECT2);
+	p->InitCoords("small_rect2");
 }
 
 void mchInitArcaneScreen(void)
