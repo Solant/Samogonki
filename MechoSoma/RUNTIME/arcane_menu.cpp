@@ -55,6 +55,7 @@
 #include "online_game.h"
 
 #include "mch_common.h" // For far target
+#include "aspect_ratio.h"
 
 /* ----------------------------- STRUCT SECTION ----------------------------- */
 
@@ -618,7 +619,6 @@ mchArcaneScreenElement::~mchArcaneScreenElement(void)
 	free();
 }
 
-const int WIDESCREEN_OFFSET = 213;
 void mchArcaneScreenElement::InitCoords(const char* name)
 {
 	int align;
@@ -632,30 +632,30 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 	if(strlen(p)) R.x = atoi(p);
 
 	// widescreen patches
-	if (getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) > 640.0f) {
+	if (AR_CURRENT->offset) {
 		// patch arrow horizontal placement
 		if (strcmp(name, "arrow") == 0) {
-			R.x += WIDESCREEN_OFFSET / 2;
+			R.x += AR_CURRENT->offset / 2;
 		}
 
 		// patch start counter
 		if (strcmp(name, "speed_counter") == 0) {
-			R.x += WIDESCREEN_OFFSET;
+			R.x += AR_CURRENT->offset;
 		}
 
 		// patch name (wNtN) text position
 		if (strcmp(name, "name_str") == 0) {
-			R.x += WIDESCREEN_OFFSET;
+			R.x += AR_CURRENT->offset;
 		}
 
 		// patch map position
 		if (strcmp(name, "map") == 0) {
-			R.x += WIDESCREEN_OFFSET;
+			R.x += AR_CURRENT->offset;
 		}
 
 		// patch avatars position
 		if (strcmp(name, "figure") == 0) {
-			R.x += WIDESCREEN_OFFSET;
+			R.x += AR_CURRENT->offset;
 		}
 
 		// finish screen changes
@@ -683,7 +683,7 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 			|| strcmp(name, "not_enough1_str") == 0
 			|| strcmp(name, "next_time_str") == 0
 		) {
-			R.x += WIDESCREEN_OFFSET;
+			R.x += AR_CURRENT->offset;
 		}
 	}
 
@@ -697,16 +697,15 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 	p = getIniKey("RESOURCE/ISCREEN/iscreen.ini","world_interface",XBuf.address());
 	if(strlen(p)) SizeX = atoi(p);
 
-	// widescreen patches
-	if (getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) > 640.0f) {
+	// patch race intro black bars
+	if (AR_CURRENT->offset) {
 		if (
 			strcmp(name, "small_rect1") == 0
 			|| strcmp(name, "small_rect2") == 0
 			|| strcmp(name, "big_rect1") == 0
 			|| strcmp(name, "big_rect2") == 0
 		) {
-			printf("%i", XGR_MAXX);
-			SizeX += WIDESCREEN_OFFSET;
+			SizeX += AR_CURRENT->offset;
 		}
 	}
 
@@ -779,7 +778,7 @@ void mchArcaneScreenElement::InitR(void)
 		case 2: // from right
 			R0 = R1 = R;
 			// widescreen fix, set initial value off screen horizontally
-			R0.x = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) + 20;
+			R0.x = AR_CURRENT->width + 20;
 			break;
 		case 3: // from down
 			R0 = R1 = R;
@@ -4950,7 +4949,7 @@ void mchA_ShowStartCount(int al)
 //	scale = (float)((mchA_TimerMax - cur_timer) % 1000) / (float)1000;
 	scale = (float)(cur_timer % 1000) / 1000.0f;
 
-	int x = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2;
+	int x = AR_CURRENT->width / 2;
 	if(tm > 0){
 		al = 255 - round(250.0f * scale);
 		scale *= sc * 16.0f;
@@ -4999,7 +4998,7 @@ void mchA_ShowCount(int al,int time)
 	if(tm > 0){
 		al = 255 - round(250.0f * scale);
 		scale *= sc * 16.0f;
-		mchA_SprD -> DrawSprite((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2,240,scale,scale,200 + tm,mchA_ColorF[2],al,0.0f,1);
+		mchA_SprD -> DrawSprite(AR_CURRENT->width / 2,240,scale,scale,200 + tm,mchA_ColorF[2],al,0.0f,1);
 	}
 }
 
@@ -5667,7 +5666,7 @@ void mchA_DrawLoadingScreen(int x,int y,int sx,int sy,int val,int max_val)
 	const int num_parts = NUM_ACTIVE_PARTS - 1;
 	const int sz = 50;
 
-	const int xc  = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2;
+	const int xc  = AR_CURRENT->width / 2;
 	const int yc  = 240;
 	const int xcl = xc - sz;
 
@@ -6504,12 +6503,12 @@ void mchArcaneRacerSet::init(int align)
 	int i;
 	mchGameWindow* wnd;
 
-	lapcntEl -> R.x = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2;
+	lapcntEl -> R.x = AR_CURRENT->width / 2;
 	lapcntEl -> R.y = 240.0f;
 	lapcntEl -> SizeX = lapcntEl -> SizeY = 0;
 
 	cpEl -> SetString(0,1,mchA_DropStr);
-	cpEl -> R.x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - cpEl -> SizeX)/2;
+	cpEl -> R.x = (AR_CURRENT->width - cpEl -> SizeX)/2;
 	cpEl -> R.y = (480 - cpEl -> SizeY)/2;
 
 	energyEl -> InitCoords("energy");
@@ -6535,7 +6534,7 @@ void mchArcaneRacerSet::init(int align)
 
 	if(align != -1){
 		cpEl -> SetString(1,1,mchA_DropStr);
-		cpEl -> R.x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - cpEl -> SizeX)/2;
+		cpEl -> R.x = (AR_CURRENT->width - cpEl -> SizeX)/2;
 		cpEl -> R.y = (480 - cpEl -> SizeY)/2;
 
 		lapEl -> R.y += 17.0f;

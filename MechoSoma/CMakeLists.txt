@@ -458,7 +458,10 @@ set(GAME_SOURCES
     iScreen/hbm.h
     iScreen/iScript.cpp
     iScreen/iText.cpp
-    iScreen/savegame.cpp)
+    iScreen/savegame.cpp
+    # widescreen fix
+    RUNTIME/aspect_ratio.cpp
+    RUNTIME/aspect_ratio.h)
 set(LIBRARY_NAME game)
 
 include_directories(aciparser)

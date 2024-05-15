@@ -85,8 +85,6 @@ float mchA_d3dGetGamma(void);
 
 void mchA_DarkenRect(int dwLeft,int dwTop,int dwRight,int dwBottom,int dwDarkness);
 
-float getAspectRatioScaleBase(int width, int height);
-
 extern unsigned mchA_ColorF[];
 extern unsigned mchA_d3dColorKey;
 extern float mchA_d3dResX;

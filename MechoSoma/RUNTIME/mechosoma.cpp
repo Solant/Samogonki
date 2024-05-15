@@ -73,6 +73,7 @@
 #ifdef GPX
 #include <c/gamepix.h>
 #endif
+#include "aspect_ratio.h"
 
 /* ----------------------------- EXTERN SECTION ----------------------------- */
 
@@ -550,18 +551,6 @@ int xtInitApplication(void)
 			break;
 		case MCH_1280x800:
 			dwScrX=1280,dwScrY=800;
-			break;
-		case MCH_1920x1080:
-			dwScrX=1920,dwScrY=1080;
-			break;
-		case MCH_1920x1200:
-			dwScrX=1920,dwScrY=1200;
-			break;
-		case MCH_2560x1440:
-			dwScrX=2560,dwScrY=1440;
-			break;
-		case MCH_2560x1600:
-			dwScrX=2560,dwScrY=1440;
 			break;
 	}
 
@@ -1989,7 +1978,7 @@ void mchGameWindow::init(int mode)
 		flags = mode;
 
 	if(flags & MCH_WND_640x480){
-		sx = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY);
+		sx = AR_CURRENT->width;
 		sy = 480;
 	}
 	else {
@@ -3159,7 +3148,7 @@ void mchReInitGraph(int mode)
 			dwScrX=2560,dwScrY=1440;
 			break;
 		case MCH_2560x1600:
-			dwScrX=2560,dwScrY=1440;
+			dwScrX=2560,dwScrY=1600;
 			break;
 	}
 	xgrInitMode = mode;
@@ -3168,8 +3157,9 @@ void mchReInitGraph(int mode)
 
 	xgrScreenSizeX = dwScrX;
 	xgrScreenSizeY = dwScrY;
+	changeAspectRatio(xgrScreenSizeX, xgrScreenSizeY);
 
-	mchA_d3dResX = (float)dwScrX / getAspectRatioScaleBase(dwScrX, dwScrY);
+	mchA_d3dResX = (float)dwScrX / AR_CURRENT->width;
 	mchA_d3dResY = (float)dwScrY / 480.0f;
 
 	XGR_MouseObj.SetClipAuto();

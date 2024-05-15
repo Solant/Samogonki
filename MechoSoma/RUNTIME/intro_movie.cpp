@@ -17,6 +17,7 @@
 #include "arcane_menu_d3d.h"
 
 #include "mch_common.h" // For far target
+#include "aspect_ratio.h"
 
 #define MAX_PATH 1024
 
@@ -49,7 +50,7 @@ void im_d3dOutSprite(float x,float y,float sx,float sy,int spr,int col,int alpha
 const int IMG_PX = 5;
 const int IMG_PY = 3;
 
-const float IMG_SCALE_X = getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / (256.0f * float(IMG_PX)) + 0.005f;
+const float IMG_SCALE_X = AR_CURRENT->width / (256.0f * float(IMG_PX)) + 0.005f;
 const float IMG_SCALE_Y = 480.0f / (256.0f * float(IMG_PY)) + 0.005f;
 
 //#define _INTRO_D3D_DEBUG_
@@ -745,10 +746,10 @@ void mchIntroMovieText::draw(void)
 	sx = acsTextStrLenMax(2,(unsigned char*)buf,0);
 	sy = acsTextHeight(2,(unsigned char*)buf,-5);
 
-	x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sx) / 2;
+	x = (AR_CURRENT->width - sx) / 2;
 	y = 480 - sy - 10;
 
-	mchA_DrawTextWindow(0,y - 5,(int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY),sy + 16,round(float(w_alpha) * float(alpha) / 255.0f),0,0);
+	mchA_DrawTextWindow(0,y - 5,AR_CURRENT->width,sy + 16,round(float(w_alpha) * float(alpha) / 255.0f),0,0);
 //	mchA_d3dOutString(x,y,mchA_FontScaleX[2],mchA_FontScaleY[2],buf,mchA_ColorF[7],alpha,2,0,1.0f,1,-6);
 
 	idx = 0;
@@ -758,7 +759,7 @@ void mchIntroMovieText::draw(void)
 		if(buf[i] == '\n'){
 			str[idx] = 0;
 			sx = acsTextStrLenMax(2,(unsigned char*)str,0);
-			x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sx) / 2;
+			x = (AR_CURRENT->width - sx) / 2;
 			mchA_d3dOutString(x,y,mchA_FontScaleX[2],mchA_FontScaleY[2],str,mchA_ColorF[7],alpha,2,0,1.0f,1);
 			y += acsFntTable[2] -> SizeY - 5;
 			idx = 0;
@@ -770,7 +771,7 @@ void mchIntroMovieText::draw(void)
 	}
 	str[idx] = 0;
 	sx = acsTextStrLenMax(2,(unsigned char*)str,0);
-	x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - sx) / 2;
+	x = (AR_CURRENT->width - sx) / 2;
 	mchA_d3dOutString(x,y,mchA_FontScaleX[2],mchA_FontScaleY[2],str,mchA_ColorF[7],alpha,2,0,1.0f,1);
 }
 
