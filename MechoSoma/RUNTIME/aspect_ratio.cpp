@@ -1,19 +1,20 @@
 #include "aspect_ratio.h"
 
-AspectRatioInfo createAspectRatio(int sc_width, int sc_height) {
+AspectRatioInfo createAspectRatio(int sc_width, int sc_height, int cameraOffset) {
     int width = 480 / sc_height * sc_width;
 
     return AspectRatioInfo {
         .width = width,
         .offset = width - 640,
+        .cameraOffset = cameraOffset,
     };
 }
 
 AspectRatioInfo aspectRatios[] = {
-    createAspectRatio(4, 3),
-    createAspectRatio(16, 9),
-    createAspectRatio(16, 10),
-    createAspectRatio(21, 9),
+    createAspectRatio(4, 3, 0),
+    createAspectRatio(16, 9, 100),
+    createAspectRatio(16, 10, 100),
+    createAspectRatio(21, 9, 100),
 };
 
 AspectRatioInfo *AR_CURRENT = &aspectRatios[0];

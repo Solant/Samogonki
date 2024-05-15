@@ -13,6 +13,8 @@ struct AspectRatioInfo {
 	int width;
     // offset for right-aligned elements
     int offset;
+	// camera offset
+	int cameraOffset;
 };
 
 extern AspectRatioInfo *AR_CURRENT;
