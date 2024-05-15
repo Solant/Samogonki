@@ -657,6 +657,34 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 		if (strcmp(name, "figure") == 0) {
 			R.x += WIDESCREEN_OFFSET;
 		}
+
+		// finish screen changes
+		if (
+			strcmp(name, "play_again_str") == 0
+			|| strcmp(name, "try_again_str") == 0
+			|| strcmp(name, "try_again2_str") == 0
+			|| strcmp(name, "go_away_str") == 0
+			|| strcmp(name, "go_away2_str") == 0
+			|| strcmp(name, "lost_str") == 0
+			|| strcmp(name, "not_lost_str") == 0
+			|| strcmp(name, "won_str0") == 0
+			|| strcmp(name, "won_str1") == 0
+			|| strcmp(name, "winner_str") == 0
+			|| strcmp(name, "continue_str") == 0
+			|| strcmp(name, "continue2_str") == 0
+			|| strcmp(name, "bonus_part") == 0
+			|| strcmp(name, "bonus_part_str") == 0
+			|| strcmp(name, "buy_str") == 0
+			|| strcmp(name, "price_str") == 0
+			|| strcmp(name, "price2_str") == 0
+			|| strcmp(name, "buy_it_str") == 0
+			|| strcmp(name, "no_thanks_str") == 0
+			|| strcmp(name, "not_enough0_str") == 0
+			|| strcmp(name, "not_enough1_str") == 0
+			|| strcmp(name, "next_time_str") == 0
+		) {
+			R.x += WIDESCREEN_OFFSET;
+		}
 	}
 
 	XBuf.init();
@@ -1942,11 +1970,30 @@ void mchA_ShowEssenceEnergy(int x,int y,float phase,int alpha,int id)
 // redraw on screen elements after resolution change
 void mchReInitArcaneScreen(void)
 {
-	mchArcaneScreenElement *p = mch_arcScrD->objList->search(AE_SMALL_RECT1);
-	p->InitCoords("small_rect1");
+	mch_arcScrD->objList->search(AE_SMALL_RECT1)->InitCoords("small_rect1");
+	mch_arcScrD->objList->search(AE_SMALL_RECT2)->InitCoords("small_rect2");
 
-	p = mch_arcScrD->objList->search(AE_SMALL_RECT2);
-	p->InitCoords("small_rect2");
+	mch_arcScrD->objList->search(AE_PLAY_AGAIN_STR)->InitCoords("play_again_str");
+	mch_arcScrD->objList->search(AE_TRY_STR)->InitCoords("try_again_str");
+	mch_arcScrD->objList->search(AE_TRY_STR2)->InitCoords("try_again2_str");
+	mch_arcScrD->objList->search(AE_AWAY_STR)->InitCoords("go_away_str");
+	mch_arcScrD->objList->search(AE_AWAY_STR2)->InitCoords("go_away2_str");
+	mch_arcScrD->objList->search(AE_LOST_STR)->InitCoords("lost_str");
+	mch_arcScrD->objList->search(AE_NOT_LOST_STR)->InitCoords("not_lost_str");
+	mch_arcScrD->objList->search(AE_WON_STR0)->InitCoords("won_str0");
+	mch_arcScrD->objList->search(AE_WON_STR1)->InitCoords("won_str1");
+	mch_arcScrD->objList->search(AE_CONTINUE_STR)->InitCoords("continue_str");
+	mch_arcScrD->objList->search(AE_CONTINUE2_STR)->InitCoords("continue2_str");
+	// causes segfault
+	// mch_arcScrD->objList->search(AE_BONUS_PART)->InitCoords("bonus_part");
+	mch_arcScrD->objList->search(AE_PART_NAME)->InitCoords("bonus_part_str");
+	mch_arcScrD->objList->search(AE_PRICE_STR)->InitCoords("price_str");
+	mch_arcScrD->objList->search(AE_PRICE_STR2)->InitCoords("price2_str");
+	mch_arcScrD->objList->search(AE_BUY_IT_STR)->InitCoords("buy_it_str");
+	mch_arcScrD->objList->search(AE_NO_THANKS_STR)->InitCoords("no_thanks_str");
+	mch_arcScrD->objList->search(AE_NOT_ENOUGH_STR0)->InitCoords("not_enough0_str");
+	mch_arcScrD->objList->search(AE_NOT_ENOUGH_STR1)->InitCoords("not_enough1_str");
+	mch_arcScrD->objList->search(AE_NEXT_TIME_STR)->InitCoords("next_time_str");
 
 	mchArcaneScreenElement *curr = mch_arcScrD->objList->first();
 	mchArcaneScreenElement *last = mch_arcScrD->objList->last();
