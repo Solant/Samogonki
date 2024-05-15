@@ -4952,7 +4952,7 @@ void mchA_ShowCount(int al,int time)
 	if(tm > 0){
 		al = 255 - round(250.0f * scale);
 		scale *= sc * 16.0f;
-		mchA_SprD -> DrawSprite(320,240,scale,scale,200 + tm,mchA_ColorF[2],al,0.0f,1);
+		mchA_SprD -> DrawSprite((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2,240,scale,scale,200 + tm,mchA_ColorF[2],al,0.0f,1);
 	}
 }
 
@@ -5620,7 +5620,7 @@ void mchA_DrawLoadingScreen(int x,int y,int sx,int sy,int val,int max_val)
 	const int num_parts = NUM_ACTIVE_PARTS - 1;
 	const int sz = 50;
 
-	const int xc  = 320;
+	const int xc  = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2;
 	const int yc  = 240;
 	const int xcl = xc - sz;
 
@@ -6457,12 +6457,12 @@ void mchArcaneRacerSet::init(int align)
 	int i;
 	mchGameWindow* wnd;
 
-	lapcntEl -> R.x = 320.0f;
+	lapcntEl -> R.x = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2;
 	lapcntEl -> R.y = 240.0f;
 	lapcntEl -> SizeX = lapcntEl -> SizeY = 0;
 
 	cpEl -> SetString(0,1,mchA_DropStr);
-	cpEl -> R.x = (640 - cpEl -> SizeX)/2;
+	cpEl -> R.x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - cpEl -> SizeX)/2;
 	cpEl -> R.y = (480 - cpEl -> SizeY)/2;
 
 	energyEl -> InitCoords("energy");
@@ -6488,7 +6488,7 @@ void mchArcaneRacerSet::init(int align)
 
 	if(align != -1){
 		cpEl -> SetString(1,1,mchA_DropStr);
-		cpEl -> R.x = (640 - cpEl -> SizeX)/2;
+		cpEl -> R.x = ((int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) - cpEl -> SizeX)/2;
 		cpEl -> R.y = (480 - cpEl -> SizeY)/2;
 
 		lapEl -> R.y += 17.0f;
