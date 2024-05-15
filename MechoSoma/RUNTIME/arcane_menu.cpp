@@ -652,6 +652,11 @@ void mchArcaneScreenElement::InitCoords(const char* name)
 		if (strcmp(name, "map") == 0) {
 			R.x += WIDESCREEN_OFFSET;
 		}
+
+		// patch avatars position
+		if (strcmp(name, "figure") == 0) {
+			R.x += WIDESCREEN_OFFSET;
+		}
 	}
 
 	XBuf.init();
@@ -1942,6 +1947,18 @@ void mchReInitArcaneScreen(void)
 
 	p = mch_arcScrD->objList->search(AE_SMALL_RECT2);
 	p->InitCoords("small_rect2");
+
+	mchArcaneScreenElement *curr = mch_arcScrD->objList->first();
+	mchArcaneScreenElement *last = mch_arcScrD->objList->last();
+	int figureIndex = 0;
+	do {
+		if (curr->type == AE_FIGURE_FACE) {
+			curr->InitCoords("figure");
+			curr->R.y += curr->SizeY * figureIndex;
+			figureIndex++;
+		}
+		curr = curr->next;
+	} while (curr != last);
 }
 
 void mchInitArcaneScreen(void)
@@ -4886,10 +4903,11 @@ void mchA_ShowStartCount(int al)
 //	scale = (float)((mchA_TimerMax - cur_timer) % 1000) / (float)1000;
 	scale = (float)(cur_timer % 1000) / 1000.0f;
 
+	int x = (int)getAspectRatioScaleBase(XGR_MAXX, XGR_MAXY) / 2;
 	if(tm > 0){
 		al = 255 - round(250.0f * scale);
 		scale *= sc * 16.0f;
-		mchA_SprD -> DrawSprite(320,240,scale,scale,200 + tm,mchA_ColorF[2],al,0.0f,1);
+		mchA_SprD -> DrawSprite(x,240,scale,scale,200 + tm,mchA_ColorF[2],al,0.0f,1);
 	}
 	else {
 #ifdef _LOCAL_VERSION_
@@ -4897,10 +4915,10 @@ void mchA_ShowStartCount(int al)
 		if(al < 0) al = 0;
 
 		scale *= sc * 10.0f;
-		mchA_SprD -> DrawSprite(320,240,scale,scale,200,mchA_ColorF[2],al,0.0f,1);
+		mchA_SprD -> DrawSprite(x,240,scale,scale,200,mchA_ColorF[2],al,0.0f,1);
 
-		mchA_SprD -> DrawSprite(320 - 64 * scale,240,scale,scale,211,mchA_ColorF[2],al,0.0f,1);
-		mchA_SprD -> DrawSprite(320 + 64 * scale,240,scale,scale,212,mchA_ColorF[2],al,0.0f,1);
+		mchA_SprD -> DrawSprite(x - 64 * scale,240,scale,scale,211,mchA_ColorF[2],al,0.0f,1);
+		mchA_SprD -> DrawSprite(x + 64 * scale,240,scale,scale,212,mchA_ColorF[2],al,0.0f,1);
 #else
 		al = 255 - round(320.0f * scale);
 		if(al < 0) al = 0;
