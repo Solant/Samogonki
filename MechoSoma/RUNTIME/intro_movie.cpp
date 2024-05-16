@@ -50,7 +50,8 @@ void im_d3dOutSprite(float x,float y,float sx,float sy,int spr,int col,int alpha
 const int IMG_PX = 5;
 const int IMG_PY = 3;
 
-const float IMG_SCALE_X = AR_CURRENT->width / (256.0f * float(IMG_PX)) + 0.005f;
+// Changing 640.0 value breaks intro on Windows
+const float IMG_SCALE_X = 640.0f / (256.0f * float(IMG_PX)) + 0.005f;
 const float IMG_SCALE_Y = 480.0f / (256.0f * float(IMG_PY)) + 0.005f;
 
 //#define _INTRO_D3D_DEBUG_
