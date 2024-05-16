@@ -1983,6 +1983,7 @@ void mchReInitArcaneScreen(void)
 	mch_arcScrD->objList->search(AE_NOT_LOST_STR)->InitCoords("not_lost_str");
 	mch_arcScrD->objList->search(AE_WON_STR0)->InitCoords("won_str0");
 	mch_arcScrD->objList->search(AE_WON_STR1)->InitCoords("won_str1");
+	mch_arcScrD->objList->search(AE_WINNER_STR)->InitCoords("winner_str");
 	mch_arcScrD->objList->search(AE_CONTINUE_STR)->InitCoords("continue_str");
 	mch_arcScrD->objList->search(AE_CONTINUE2_STR)->InitCoords("continue2_str");
 	// causes segfault
