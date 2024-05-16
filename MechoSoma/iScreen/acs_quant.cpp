@@ -1702,7 +1702,7 @@ void acsShowCredits(void)
 			memcpy(str,p -> string + idx,i - idx);
 			str[i - idx] = 0;
 
-			xx = (640 - acsStrLen(1,(unsigned char*)str,1)) / 2;
+			xx = (AR_CURRENT->width - acsStrLen(1,(unsigned char*)str,1)) / 2;
 			mchA_d3dOutString(xx,yy,mchA_FontScaleX[1],mchA_FontScaleY[1],str,mchA_ColorF[2],170,1,1);
 			yy += 30;
 			idx = i + 1;
