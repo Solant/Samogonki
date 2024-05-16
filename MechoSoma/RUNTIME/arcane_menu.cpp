@@ -1971,6 +1971,8 @@ void mchReInitArcaneScreen(void)
 {
 	mch_arcScrD->objList->search(AE_SMALL_RECT1)->InitCoords("small_rect1");
 	mch_arcScrD->objList->search(AE_SMALL_RECT2)->InitCoords("small_rect2");
+	mch_arcScrD->objList->search(AE_BIG_RECT1)->InitCoords("big_rect1");
+	mch_arcScrD->objList->search(AE_BIG_RECT2)->InitCoords("big_rect2");
 
 	mch_arcScrD->objList->search(AE_PLAY_AGAIN_STR)->InitCoords("play_again_str");
 	mch_arcScrD->objList->search(AE_TRY_STR)->InitCoords("try_again_str");
