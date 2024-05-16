@@ -53,7 +53,7 @@ MD3DERROR d3dEnumVideoMode(int *pNumVideoMode, MD3DMODE **ppArray) {
   modes[7].bitPerPixel = 32;
 
   modes[8].dx = 1920;
-  modes[8].dy = 1020;
+  modes[8].dy = 1080;
   modes[8].bitPerPixel = 32;
 
   modes[9].dx = 1920;

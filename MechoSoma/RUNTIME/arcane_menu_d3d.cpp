@@ -1019,7 +1019,7 @@ int mchA_d3dCheckMode(int mode,int color_depth)
 				sx=2560,sy=1440;
 				break;
 			case MCH_2560x1600:
-				sx=2560,sy=1440;
+				sx=2560,sy=1600;
 				break;
 		}
 		for(i = 0; i < mchA_d3dNumModes; i ++){
