@@ -2001,10 +2001,24 @@ void mchReInitArcaneScreen(void)
 	mchArcaneScreenElement *last = mch_arcScrD->objList->last();
 	int figureIndex = 0;
 	do {
-		if (curr->type == AE_FIGURE_FACE) {
-			curr->InitCoords("figure");
-			curr->R.y += curr->SizeY * figureIndex;
-			figureIndex++;
+		switch (curr->type) {
+			case AE_FIGURE_FACE:
+				curr->InitCoords("figure");
+				curr->R.y += curr->SizeY * figureIndex;
+				figureIndex++;
+				break;
+			case AE_ARROW:
+				curr->InitCoords("arrow");
+				break;
+			case AE_WORLD_MAP:
+				curr->InitCoords("map");
+				break;
+			case AE_SPEED_COUNTER:
+				curr->InitCoords("speed_counter");
+				break;
+			case AE_NAME_STATUS_STR:
+				curr->InitCoords("name_str");
+				break;
 		}
 		curr = curr->next;
 	} while (curr != last);
