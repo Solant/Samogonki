@@ -108,10 +108,10 @@ void mchIntroMovieImage::draw(int x,int y,int alpha)
 
 	for(j = 0; j < IMG_PY; j ++){
 		for(i = 0; i < IMG_PX; i ++){
-			xx = float(i << 8) * scale_x;
-			yy = float(j << 8) * scale_y;
 			// widescreen fix, added offset multiplied by 2
-			im_d3dOutSprite(float(x) + xx + AR_CURRENT->offset * 2,float(y) + yy,scale_x,scale_y,im_d3dSprite[i + j * IMG_PX + slot * IMG_PX * IMG_PY],0xFFFFFF,alpha,0,0);
+			xx = float(i << 8) * scale_x + AR_CURRENT->offset * 2;
+			yy = float(j << 8) * scale_y;
+			im_d3dOutSprite(float(x) + xx,float(y) + yy,scale_x,scale_y,im_d3dSprite[i + j * IMG_PX + slot * IMG_PX * IMG_PY],0xFFFFFF,alpha,0,0);
 		}
 	}
 }

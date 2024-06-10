@@ -15,7 +15,7 @@
 #include "Statistics.h"
 #include "MultibodyContact.h"
 #include "DebugPrm.h"
-#include <aspect_ratio.h>
+#include "aspect_ratio.h"
 
 /* ----------------------------- EXTERN SECTION ----------------------------- */
 extern cInterfaceVisGeneric	*gb_IVisGeneric;

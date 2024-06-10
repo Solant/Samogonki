@@ -58,7 +58,7 @@
 #include "cdcheck.h"
 
 #include "mch_common.h" // For far target
-#include <aspect_ratio.h>
+#include "aspect_ratio.h"
 
 /* ----------------------------- STRUCT SECTION ----------------------------- */
 /* ----------------------------- EXTERN SECTION ----------------------------- */

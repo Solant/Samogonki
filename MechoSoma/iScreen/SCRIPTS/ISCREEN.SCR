@@ -2433,12 +2433,6 @@ screen {
 		state_str $ACS_1152_STR
 		state_str $ACS_1280_STR
 		state_str $ACS_1600_STR
-		state_str $ACS_1280_720_STR
-		state_str $ACS_1280_800_STR
-		state_str $ACS_1920_1080_STR
-		state_str $ACS_1920_1200_STR
-		state_str $ACS_2560_1440_STR
-		state_str $ACS_2560_1600_STR
 
 		#define OPT_CODE $ACS_OPT_RESOLUTION
 		$ALPHA_SET0
