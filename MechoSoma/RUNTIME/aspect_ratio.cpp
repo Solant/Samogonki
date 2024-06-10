@@ -1,5 +1,8 @@
 #include <string.h>
 
+#include "xtool.h"
+#include "xmath.h"
+#include "arcane_menu.h"
 #include "aspect_ratio.h"
 
 AspectRatioInfo createAspectRatio(int sc_width, int sc_height, int cameraOffset) {
