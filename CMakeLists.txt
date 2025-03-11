@@ -10,7 +10,7 @@ if (UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif ()
 
-add_definitions(-D_MECHOSOMA_ -D_USE_TILEMAP_ -D_USE_TERRA_ -DNASSERT -D_FINAL_VERSION_ -D_MPPLUS_SOUNDTRACK_)
+add_definitions(-D_MECHOSOMA_ -D_USE_TILEMAP_ -D_USE_TERRA_ -DNASSERT -D_FINAL_VERSION_ -D_MPPLUS_SOUNDTRACK_ -DBACKTRACE)
 
 if (LINUX)
     add_definitions(-D__forceinline=inline -Dstricmp=strcasecmp -D_DEBUG)

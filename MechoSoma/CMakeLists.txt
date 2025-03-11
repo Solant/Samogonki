@@ -6,6 +6,9 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
 endif()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -g")
+
 set(GAME_SOURCES
     # aciparser
     aciparser/aci_parser.cpp
@@ -511,6 +514,16 @@ include_directories(../3rdparty/stb)
 find_package(ZLIB REQUIRED)
 find_package(Iconv REQUIRED)
 
+include(FetchContent)
+
+# Also requires one of: libbfd (gnu binutils), libdwarf, libdw (elfutils)
+FetchContent_Declare(backward
+    GIT_REPOSITORY https://github.com/bombela/backward-cpp
+    GIT_TAG master  # or a version tag, such as v1.6
+    SYSTEM          # optional, the Backward include directory will be treated as system directory
+)
+FetchContent_MakeAvailable(backward)
+
 if (WIN32)
     set(BCRYPT_LIBRARY bcrypt)
     set(WINDOWS_COMMON_LIBRARIES SetupAPI Imm32 Version Winmm Cfgmgr32)
@@ -534,7 +547,7 @@ if (STEAM_VERSION)
     endif()
 endif()
 
-set(COMMON_APPLICATION_LIBRARIES 3dsftk3 iniparser mpcdec ZLIB::ZLIB Iconv::Iconv ${BCRYPT_LIBRARY} SDL2 ${WINDOWS_COMMON_LIBRARIES} ${STEAM_LIBRARY})
+set(COMMON_APPLICATION_LIBRARIES 3dsftk3 iniparser mpcdec ZLIB::ZLIB Iconv::Iconv ${BCRYPT_LIBRARY} SDL2 ${WINDOWS_COMMON_LIBRARIES} ${STEAM_LIBRARY} Backward::Interface bfd dl)
 
 if (MINGW)
     add_executable(${APPLICATION_NAME} WIN32 ${GAME_SOURCES})

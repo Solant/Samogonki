@@ -29,6 +29,13 @@
 
 int xtSysQuantDisabled = 0;
 
+#ifdef BACKTRACE
+#include <csignal>
+#include <fstream>
+#include <string>
+#include "backward.hpp"
+#endif
+
 namespace {
 
     struct LoopState {
@@ -86,12 +93,33 @@ namespace {
     };
 }
 
+#ifdef BACKTRACE
+void signal_handler(int sig) {
+  std::time_t now = std::time(nullptr);
+  std::stringstream name;
+  name << "error_" << now << ".txt";
+
+  std::ofstream file(name.str(), std::ios::app);
+  backward::StackTrace st;
+  st.load_here(32);
+  backward::Printer p;
+  p.print(st, file);
+  file.close();
+  std::exit(1);
+}
+#endif
+
 #ifdef GPX
 
 int game_main(int argc, char const *argv[]) {
   localization::setLanguage(gpx()->sys()->getLanguage().c_str());
 #else
 int main(int argc, char const *argv[]) {
+  #ifdef BACKTRACE
+  std::signal(SIGSEGV, signal_handler);
+  std::signal(SIGABRT, signal_handler);
+  #endif
+
   #ifdef STEAM_VERSION
   if (!SteamAPI_Init()) {
     return 1;
